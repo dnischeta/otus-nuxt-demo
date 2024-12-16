@@ -1,8 +1,23 @@
+<script setup lang="ts">
+type Post = {
+    id: number;
+    title: string;
+    body: string;
+}
+
+const { public: { apiBase } } = useRuntimeConfig()
+
+const { data, status } = await useFetch<Post[]>(`${apiBase}/posts`, { lazy: true });
+</script>
+
 <template>
     <h2>Posts</h2>
-    <ul>
-        <li><NuxtLink :to="{ name: 'post-id', params: { id: 1 } }">Post 1</NuxtLink></li>
-        <li><NuxtLink :to="{ name: 'post-id', params: { id: 2 } }">Post 2</NuxtLink></li>
-        <li><NuxtLink :to="{ name: 'post-id', params: { id: 3 } }">Post 2</NuxtLink></li>
+    <div v-if="status === 'pending'">Loading...</div>
+    <ul v-else>
+        <li v-for="post in data">
+            <NuxtLink :key="post.id" :to="{ name: 'post-id', params: { id: post.id } }">
+                Post {{ post.id }}
+            </NuxtLink>
+        </li>
     </ul>
 </template>
