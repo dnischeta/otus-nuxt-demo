@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      apiBase: 'https://jsonplaceholder.typicode.com/',
+      apiBase: 'https://jsonplaceholder.typicode.com',
     },
   },
 })
